@@ -86,8 +86,10 @@ const streamDataSensors = async () => {
     .select("*")
     .order("timestamp", { ascending: false })
     .limit(1);
+  
+  const result = formatPayload(data[0])
 
-  SSEInstance.sendData(formatPayload(data))
+  SSEInstance.sendData(result)
 
   const channels = supabase
     .channel("custom-all-channel")
