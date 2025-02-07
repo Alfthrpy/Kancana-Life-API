@@ -1,23 +1,38 @@
-import DeviceService from './../services/deviceService'
+import DeviceService from '../services/deviceService.js'
 
 
 const getDeviceById = async (req, res) => {
     try {
         const id = req.query.device_id
+        let result;
         if(id){
-            const result = await DeviceService.getDeviceById(id)
-            return res.status(200).json(result)
+            result = await DeviceService.getDeviceById(id)
         } else {
-            const result = await DeviceService.getAllDevices()
-            return res.status(200).json(result)
+            result = await DeviceService.getAllDevices()
         }
+
+        return (result.length ? res.status(200).json(result) : res.status(404).json({message : "Data not found"}))
     } catch (error) {
         return res.status(500).json({message:"Internal Server Error"})
     }
 }
 
+const updateDevice = async (req,res) => {
+    const id = req.params.id
+    const newName = req.body.name
+    try {
+        const result = await DeviceService.updateDeviceName(id,newName)
+        if(result.length){
+            return res.status(200).json({message:"Data berhasil diedit"})
+        } else {
+            return res.status(404).json({message:"Id tidak ditemukan"})
+        }
+    } catch (error) {
+        return res.status(500).json({message:"Internal server error",error})
+    }
+}
 
 
-const controller = {getDeviceById}
+const controllers = {getDeviceById,updateDevice}
 
-export default controller
+export default controllers
