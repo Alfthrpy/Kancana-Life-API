@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/devices',DeviceController.getDeviceById)
 router.patch('/devices/:id',DeviceController.updateDevice)
-router.delete('/devices/:id')
-router.get('/devices/stream')
+router.delete('/devices/:id',DeviceController.deleteDevice)
+router.get('/devices/dashboard',DeviceController.getDevicesDashboard)
 
 export default router

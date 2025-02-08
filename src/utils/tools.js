@@ -92,4 +92,26 @@ const formatPayload = (data) => {
   return formatted;
 };
 
-export { startOfMonth, today,formatPayload };
+
+const formatDashboardDevice = (data) => {
+    const result = {
+        "active_device": data.device_aktif,
+        "all_devices": data.total_devices,
+        "max_temperature": {
+          "value": data.suhu_tertinggi,
+          "device_name": data.suhu_device
+        },
+        "min_air_quality": {
+          "value": data.co2_tertinggi,
+          "device_name": data.co2_device
+        },
+        "max_dust_density": {
+          "value": data.debu_terbanyak,
+          "device_name": data.debu_device
+        }
+      }
+
+      return result
+}
+
+export { startOfMonth, today,formatPayload,formatDashboardDevice };
