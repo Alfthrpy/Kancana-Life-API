@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import cors from 'cors';
 import dataSensorRoute from './src/routes/dataSensorRoute.js';
 import deviceRoute from './src/routes/deviceRoute.js'
+import authRoute from './src/routes/authRoute.js'
 import morgan from 'morgan';
 import compression from 'compression';
 
@@ -21,6 +22,7 @@ app.use(morgan('combined'))
 app.use('/hello',(req,res)=>{res.json({message:'Hello World'})});
 app.use('/api',dataSensorRoute);
 app.use('/api',deviceRoute)
+app.use('/api',authRoute)
 
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
