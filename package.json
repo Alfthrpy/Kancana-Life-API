@@ -19,6 +19,7 @@
     "express-rate-limit": "^7.5.0",
     "express-sse": "^0.5.3",
     "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.9",
     "zod": "^3.24.1"

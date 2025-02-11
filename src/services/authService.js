@@ -1,5 +1,7 @@
 import supabase from "../config/database.js";
-
+import dotenv from "dotenv";
+import jwt from 'jsonwebtoken'
+dotenv.config();
 
 const loginAdmin = async (form) => {
     try {
@@ -40,8 +42,11 @@ const loginUser = async (form) =>{
                 throw updateError
             }
         }
+        const token = jwt.sign({ deviceId: form.device_id }, process.env.JWT_SECRET, {
+            expiresIn: "3d", // Token berlaku 7 hari
+        });
 
-        return {success:true,message:"Login berhasil"}
+        return {success:true,message:"Login berhasil",token}
         
     } catch (error) {
         throw error
