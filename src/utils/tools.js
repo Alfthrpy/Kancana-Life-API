@@ -1,3 +1,5 @@
+import NodeGeocoder from 'node-geocoder';
+
 function startOfMonth(date) {
   const start = new Date(date);
   start.setDate(1);
@@ -114,4 +116,21 @@ const formatDashboardDevice = (data) => {
       return result
 }
 
-export { startOfMonth, today,formatPayload,formatDashboardDevice };
+const options = {
+    provider: 'openstreetmap', // Bisa pakai 'google', 'mapquest', dll.
+  };
+
+const geoCoder = NodeGeocoder(options);
+
+const reverseGeocode = async (lat, lon) => {
+    try {
+      const res = await geoCoder.reverse({ lat, lon });
+      const location = res[0].formattedAddress.split(',').slice(0, -3).join(', ');
+      console.log(location);
+      return location;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+export { startOfMonth, today,formatPayload,formatDashboardDevice,reverseGeocode };

@@ -1,6 +1,7 @@
 import supabase from "../config/database.js";
 import dotenv from "dotenv";
 import jwt from 'jsonwebtoken'
+import { reverseGeocode } from "../utils/tools.js";
 dotenv.config();
 
 const loginAdmin = async (form) => {
@@ -32,10 +33,13 @@ const loginUser = async (form) =>{
             return {success:false,message:"Device ID tidak ditemukan"}
         }
 
+        const coordinate = form.coordinate.split(',').map((item)=>parseFloat(item))
+        const location = await reverseGeocode(coordinate[0],coordinate[1])
+
         if(isDevice.location ===null){
             const {error:updateError} = await supabase
             .from('devices')
-            .update({location:form.location})
+            .update({coordinate:form.coordinate,location:location})
             .eq('id',form.device_id)
 
             if(updateError){
